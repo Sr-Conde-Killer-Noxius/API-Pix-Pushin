@@ -7,7 +7,11 @@ def receber_webhook():
     dados = request.json
     print("Pagamento recebido:")
     print(dados)
+
+    with open("webhook_status.txt", "w") as f:
+        f.write("CONFIRMADO")
+
     return '', 200
 
 if __name__ == '__main__':
-    app.run(port=5000)
+    app.run(host="0.0.0.0", port=5000)

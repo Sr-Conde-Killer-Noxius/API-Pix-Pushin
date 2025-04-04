@@ -23,7 +23,7 @@ TOKEN = "22756|bDLE9HZPWtmH29MbGuNejjgRl0WroCe034kg2Qtw476707f4"
 # Criando o dicionário de dados com a função integrada
 dados = {
     "value": Variaveis.Valor_Final_pix,  # Valor em centavos (ex: R$10.00 -> 1000)
-    "webhook_url": ""
+    "webhook_url": "http://localhost:5000/webhook",  # URL do webhook
 }
 
 

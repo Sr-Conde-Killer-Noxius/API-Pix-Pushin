@@ -26,6 +26,7 @@ if __name__ != "__main__":# modulo_nox.py
         if caller != "Runing_Apparence.py":
             
             Variaveis.log.append("[Nox] Acesso indevido à função tratar_valor_fina_input.")
+            
             return 
         
         valor = valor.replace(".", "").replace(",", ".")
