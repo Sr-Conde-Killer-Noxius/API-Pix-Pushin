@@ -4,7 +4,7 @@ import Variaveis
 
 
 
-if __name__ != "__main__":# modulo_nox.py
+if __name__ != "__main__":# apenas para evitar execução direta
     import inspect
     import Variaveis
     import pushyb
@@ -25,7 +25,9 @@ if __name__ != "__main__":# modulo_nox.py
         
         if caller != "Runing_Apparence.py":
             
-            Variaveis.log.append("[Nox] Acesso indevido à função tratar_valor_fina_input.")
+            Variaveis.log.append("[Nox] Acesso indevido à função tratar_valor_fina_input NVL!.")
+            Variaveis.log.append(f"[Nox] Chamador: {caller}")
+            Variaveis.log.append(f"Nivel: {Variaveis.ID_NivelamentoContrl}")
             
             return 
         
@@ -48,26 +50,34 @@ if __name__ != "__main__":# modulo_nox.py
         ##print(f"[Nox] Origem final: {origem}")
         
 
-        if caller == "Nivelador_de_Processos.py":            
+        if caller != "Nivelador_de_Processos.py" or Variaveis.ID_NivelamentoContrl != 2:  
 
-            Variaveis.log.append("Nivelador de Processos Iniciado com Sucesso")  
-            pushyb.dados["value"] = Variaveis.Valor_Final_pix
-            Variaveis.log.append("Enviando dados para cobrança PIX...")
+            Variaveis.log.append("[Nox] Acesso indevido à função pomba_correios - NLV!.")  
+            Variaveis.log.append(f"[Nox] Chamador: {caller}")
+            Variaveis.log.append(f"Nivel: {Variaveis.ID_NivelamentoContrl}")
 
-            try:
-                resposta = pushyb.requests.post(pushyb.URL_COBRANCA, json=pushyb.dados, headers=pushyb.headers)
-                dados_resposta = resposta.json()
+            return        
 
-                if "qr_code" in dados_resposta:
-                    Variaveis.Status_QRCode = dados_resposta["qr_code"]
-                else:
-                    Variaveis.Status_QRCode = "Erro: Código PIX ausente na resposta."
+        Variaveis.log.append("Nivelador de Processos Iniciado com Sucesso Pomba Correios")
+        pushyb.dados["value"] = Variaveis.Valor_Final_pix
+        Variaveis.log.append("Enviando dados para cobrança PIX...")
 
-                with open("log_pix.json", "w", encoding="utf-8") as log_file:
-                    json.dump(dados_resposta, log_file, indent=4, ensure_ascii=False)
+        try:
+            resposta = pushyb.requests.post(pushyb.URL_COBRANCA, json=pushyb.dados, headers=pushyb.headers)
+            dados_resposta = resposta.json()
 
-            except Exception as e:
-                Variaveis.log.append(f"Erro durante o envio: {e}")
-                Variaveis.Status_QRCode = "Erro de comunicação."
+            if "qr_code" in dados_resposta:
+                Variaveis.Status_QRCode = dados_resposta["qr_code"]
+                Variaveis.ID_NivelamentoContrl = 1  
+
+            else:
+                Variaveis.Status_QRCode = "Erro: Código PIX ausente na resposta."
+
+            with open("log_pix.json", "w", encoding="utf-8") as log_file:
+                json.dump(dados_resposta, log_file, indent=4, ensure_ascii=False)
+
+        except Exception as e:
+            Variaveis.log.append(f"Erro durante o envio: {e}")
+            Variaveis.Status_QRCode = "Erro de comunicação."
         else:
             Variaveis.log.append("[Nox] Acesso indevido à função pomba_correios.")

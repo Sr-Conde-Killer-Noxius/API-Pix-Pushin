@@ -9,11 +9,13 @@ import time
 Captar_Valor_Final = Variaveis.Valor_Final_pix
 
 if __name__ == "__main__":
+    import Nivelador_de_Processos
 
     #Executando Módulo de Inicialização
     for i in Variaveis.inciando_list:
         print(i)
         time.sleep(Variaveis.Sleep_time) # Atraso configurado em Variaveis
+    
 
     
     #Captando Valor Final1
@@ -24,7 +26,9 @@ if __name__ == "__main__":
     Variaveis.Valor_Final_pix = Captar_Valor_Final
 
     #Executando Nivelador de Processos
-    import Nivelador_de_Processos
+    Variaveis.ID_NivelamentoContrl = 2
+    Nivelador_de_Processos.Nivelamento_de_Solo()
+  
 
     for log_atual in Variaveis.log:
         print(log_atual)
@@ -33,6 +37,20 @@ if __name__ == "__main__":
     print(Variaveis.log_org)
     print(Variaveis.Status_QRCode)
     print(Variaveis.log_org)
+
+    def finish():
+        Variaveis.ID_NivelamentoContrl = 2
+        print(f"Nivel: {Variaveis.ID_NivelamentoContrl}")
+        print("Ultima Fase!")
+        Nivelador_de_Processos.Nivelamento_de_Solo()
+
+    finish()
+ 
+
+
+
+
+
 
 
 #Atualizando Valor Final

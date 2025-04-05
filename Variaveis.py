@@ -23,3 +23,6 @@ log_org = "\n----------------------------------------\n"
 
 
 RetornoHulk = 0
+
+#ID de Nivelametno de processos.
+ID_NivelamentoContrl = 0
