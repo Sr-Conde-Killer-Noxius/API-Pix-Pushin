@@ -68,7 +68,6 @@ if __name__ != "__main__":# apenas para evitar execução direta
 
             if "qr_code" in dados_resposta:
                 Variaveis.Status_QRCode = dados_resposta["qr_code"]
-                Variaveis.ID_NivelamentoContrl = 1  
 
             else:
                 Variaveis.Status_QRCode = "Erro: Código PIX ausente na resposta."
