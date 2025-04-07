@@ -14,9 +14,9 @@ if __name__ != "__main__":# modulo_nox.py
         
         if caller != "Nivelador_de_Processos.py" or Variaveis.ID_NivelamentoContrl != 1:
 
-            Variaveis.log.append("[Nox] Acesso indevido à função capthcar_pix_webhook.")
-            Variaveis.log.append(f"[Nox] Chamador: {caller}")
-            Variaveis.log.append(f"Nível : {Variaveis.ID_NivelamentoContrl}")
+            print("[Nox] Acesso indevido à função capthcar_pix_webhook.")
+            print(f"[Nox] Chamador: {caller}")
+            print(f"Nível : {Variaveis.ID_NivelamentoContrl}")
 
             return
         
