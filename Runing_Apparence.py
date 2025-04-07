@@ -12,8 +12,8 @@ if __name__ == "__main__":
     import Nivelador_de_Processos
 
     #Executando Módulo de Inicialização
-    for i in Variaveis.inciando_list:
-        print(i)
+    for ignicao in Variaveis.inciando_list:
+        print(ignicao)
         time.sleep(Variaveis.Sleep_time) # Atraso configurado em Variaveis
     
 
@@ -31,17 +31,14 @@ if __name__ == "__main__":
   
 
     for log_atual in Variaveis.log:
-        print(log_atual)
         time.sleep(Variaveis.Sleep_time) # Atraso configurado em Variaveis
 
-    print(Variaveis.log_org)
-    print(Variaveis.Status_QRCode)
-    print(Variaveis.log_org)
+    Variaveis.log.append(Variaveis.log_org)
+    Variaveis.log.append(Variaveis.Status_QRCode)
+    Variaveis.log.append(Variaveis.log_org)
 
     def finish():
-        Variaveis.ID_NivelamentoContrl = 1
-        print(f"Nivel: {Variaveis.ID_NivelamentoContrl}")
-        print("Ultima Fase!")
+        Variaveis.ID_NivelamentoContrl = 1    
         Nivelador_de_Processos.Nivelamento_de_Solo()
 
     finish()
