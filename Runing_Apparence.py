@@ -31,17 +31,21 @@ if __name__ == "__main__":
   
 
     for log_atual in Variaveis.log:
+        print(log_atual)
         time.sleep(Variaveis.Sleep_time) # Atraso configurado em Variaveis
 
-    Variaveis.log.append(Variaveis.log_org)
-    Variaveis.log.append(Variaveis.Status_QRCode)
-    Variaveis.log.append(Variaveis.log_org)
+    print(Variaveis.log_org)
+    print(Variaveis.Status_QRCode)
+    print(Variaveis.log_org)
 
     def finish():
         Variaveis.ID_NivelamentoContrl = 1    
         Nivelador_de_Processos.Nivelamento_de_Solo()
 
     finish()
+    print("Finalizando...")
+    Variaveis.ID_NivelamentoContrl = 4
+    Nivelador_de_Processos.Nivelamento_de_Solo()
  
 
 

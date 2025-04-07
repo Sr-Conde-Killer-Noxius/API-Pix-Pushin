@@ -2,17 +2,11 @@
 import Variaveis
 
 
-
-
 if __name__ != "__main__":# apenas para evitar execução direta
     import inspect
     import Variaveis
     import pushyb
     import json
-
-    # Adiciona log de execução
-    Variaveis.log.append("Executando Verificações de Inicialização")
-
 
     def tratar_valor_fina_input(valor):
         caller = inspect.stack()[1].filename.split("\\")[-1]
@@ -25,9 +19,9 @@ if __name__ != "__main__":# apenas para evitar execução direta
         
         if caller != "Runing_Apparence.py":
             
-            Variaveis.log.append("[Nox] Acesso indevido à função tratar_valor_fina_input NVL!.")
-            Variaveis.log.append(f"[Nox] Chamador: {caller}")
-            Variaveis.log.append(f"Nivel: {Variaveis.ID_NivelamentoContrl}")
+            Variaveis.log_Erros.append("[Nox] Acesso indevido a dado de Valores!.")
+            Variaveis.log_Erros.append(f"[Nox] Chamador: {caller}")
+            Variaveis.log_Erros.append(f"Nivel: {Variaveis.ID_NivelamentoContrl}")
             
             return 
         
@@ -52,12 +46,13 @@ if __name__ != "__main__":# apenas para evitar execução direta
 
         if caller != "Nivelador_de_Processos.py" or Variaveis.ID_NivelamentoContrl != 2:  
 
-            Variaveis.log.append("[Nox] Acesso indevido à função pomba_correios - NLV!.")  
-            Variaveis.log.append(f"[Nox] Chamador: {caller}")
-            Variaveis.log.append(f"Nivel: {Variaveis.ID_NivelamentoContrl}")
+            Variaveis.log_Erros.append("[Nox] Acesso indevido à função pomba_correios - NLV!.")  
+            Variaveis.log_Erros.append(f"[Nox] Chamador: {caller}")
+            Variaveis.log_Erros.append(f"Nivel: {Variaveis.ID_NivelamentoContrl}")
 
             return        
-
+        
+        Variaveis.log.append("Executando Verificações de Inicialização")
         Variaveis.log.append("Nivelador de Processos Iniciado com Sucesso Pomba Correios")
         pushyb.dados["value"] = Variaveis.Valor_Final_pix
         Variaveis.log.append("Enviando dados para cobrança PIX...")
@@ -79,4 +74,4 @@ if __name__ != "__main__":# apenas para evitar execução direta
             Variaveis.log.append(f"Erro durante o envio: {e}")
             Variaveis.Status_QRCode = "Erro de comunicação."
         else:
-            Variaveis.log.append("[Nox] Acesso indevido à função pomba_correios.")
+            Variaveis.log_Erros.append("[Nox] Acesso indevido à função pomba_correios - Nível -1.")
