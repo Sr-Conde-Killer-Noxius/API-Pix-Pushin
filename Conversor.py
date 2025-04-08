@@ -62,8 +62,8 @@ if __name__ != "__main__":# apenas para evitar execução direta
         pushyb.dados["value"] = Variaveis.Valor_Final_pix
         Variaveis.log.append("Enviando dados para cobrança PIX...")
         # Registrar o ID no servidor
-        pushyb.requests.post("https://seu-servidor.onrender.com/registrar-id", json={
-            "id": Variaveis.id_do_pix
+        pushyb.requests.post("https://api-pix-pushin.onrender.com/registrar-id", json={
+        "id":Variaveis.id_do_pix
         })
 
         try:

@@ -2,6 +2,7 @@
 if __name__ != "__main__":# modulo_nox.py
     import inspect
     import Variaveis
+ 
 
 
     def capthcar_pix_webhook():
@@ -18,12 +19,14 @@ if __name__ != "__main__":# modulo_nox.py
         
         import requests
         import time
+        
 
-        URL_STATUS = "https://api-pix-pushin.onrender.com/status"  # endpoint que o Render expõe
+        URL_STATUS = "https://api-pix-pushin.onrender.com/status"  # endpoint exposto pelo Render
 
         print("⏳ Aguardando confirmação de pagamento via webhook...")
 
-        id_esperado = Variaveis.id_do_pix  # ID atual da cobrança
+        id_esperado = Variaveis.id_do_pix  # ID da cobrança esperada
+        tentativa = 0
 
         while True:
             try:
@@ -33,14 +36,17 @@ if __name__ != "__main__":# modulo_nox.py
                     status = dados.get("pagamento", "")
                     id_recebido = dados.get("id_pix", "")
 
-                    if status == "CONFIRMADO" and id_recebido == id_esperado:
-                        print("✅ Pagamento confirmado com sucesso!")
+                    if id_recebido == id_esperado and status.lower() == "confirmado":
+                        print("✅ Pagamento confirmado!")
                         break
-                    else:
-                        print("🔄 Aguardando... Status:", status, "| ID:", id_recebido)
-                else:
-                    print(f"⚠️ Erro na requisição: {resposta.status_code}")
-            except Exception as erro:
-                print(f"❌ Erro ao consultar status: {erro}")
 
-            time.sleep(3)
+                tentativa += 1
+                if tentativa >= 60:
+                    print("❌ Tempo limite excedido. Pagamento não confirmado.")
+                    break
+
+                time.sleep(5)
+
+            except Exception as e:
+                print(f"Erro na verificação de status: {e}")
+                time.sleep(5)

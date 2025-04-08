@@ -9,6 +9,10 @@ app = Flask(__name__)
 
 # Lista dinâmica de IDs válidos (em memória)
 ids_validos = set()
+# Substituindo o set simples por um dicionário
+
+pagamentos = {}  # Ex: {"id_pix": "CONFIRMADO"}
+
 
 @app.route('/ping', methods=['GET', 'POST', 'HEAD'])
 def ping():
@@ -43,44 +47,30 @@ def verificar_id():
     return jsonify({"valido": False}), 404
 
 @app.route('/webhook', methods=['POST'])
-def receber_webhook():
-    dados = request.json
-    id_recebido = dados.get("id_pix")
-    print("Pagamento recebido:")
-    print(dados)
+def webhook():
+    dados = request.get_json()
+    id_pix = dados.get("id_pix")
 
-    # Verifica se o ID é válido
-    if id_recebido not in ids_validos:
-        print(f"❌ ID PIX inválido: {id_recebido}")
-        return '', 403
+    if id_pix:
+        pagamentos[id_pix] = "CONFIRMADO"
+        return jsonify({"status": "recebido"}), 200
+    else:
+        return jsonify({"erro": "id_pix ausente"}), 400
 
-    print("✅ Pagamento confirmado:")
-    print(dados)
-
-    # Grava status do pagamento
-    with open("webhook_status.txt", "w") as f:
-        f.write("CONFIRMADO")
-
-    # Remove ID validado (opcional)
-    ids_validos.discard(id_recebido)
-
-    return '', 200
 
 @app.route('/status', methods=['GET'])
-def status_pagamento():
-    try:
-        with open("webhook_status.txt", "r") as f:
-            conteudo = f.read().strip()
-            status, id_pix = conteudo.split("|")
-        return jsonify({
-            "pagamento": status,
-            "id_pix": id_pix
-        }), 200
-    except:
-        return jsonify({
-            "pagamento": "PENDENTE",
-            "id_pix": None
-        }), 200
+def status():
+    id_pix = request.args.get("id_pix")
+
+    if not id_pix:
+        return jsonify({"erro": "id_pix não fornecido"}), 400
+
+    status_pagamento = pagamentos.get(id_pix, "PENDENTE")
+    return jsonify({
+        "id_pix": id_pix,
+        "pagamento": status_pagamento
+    }), 200
+
 
 
 # Execução principal
