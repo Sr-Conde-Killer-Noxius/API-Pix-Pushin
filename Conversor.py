@@ -76,6 +76,7 @@ if __name__ != "__main__":# apenas para evitar execução direta
             with open("log_pix.json", "r", encoding="utf-8") as file:
                 dados = json.load(file)
                 Variaveis.id_do_pix = dados.get("id", "")
+                print(f"Id do pix: {Variaveis.id_do_pix}")
             pushyb.requests.post("https://api-pix-pushin.onrender.com/registrar-id", json={
             "id":Variaveis.id_do_pix
             })

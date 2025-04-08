@@ -35,6 +35,7 @@ def registrar_id():
     if not id_pix:
         return jsonify({"erro": "ID não informado"}), 400
     ids_validos.add(id_pix)
+    pagamentos[id_pix] = "PENDENTE"  # <-- ESSENCIAL
     return jsonify({"status": "ID registrado com sucesso"}), 200
 
 @app.route('/verificar-id', methods=['GET'])
