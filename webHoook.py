@@ -70,10 +70,18 @@ def receber_webhook():
 def status_pagamento():
     try:
         with open("webhook_status.txt", "r") as f:
-            status = f.read().strip()
-        return jsonify({"pagamento": status}), 200
+            conteudo = f.read().strip()
+            status, id_pix = conteudo.split("|")
+        return jsonify({
+            "pagamento": status,
+            "id_pix": id_pix
+        }), 200
     except:
-        return jsonify({"pagamento": "PENDENTE"}), 200
+        return jsonify({
+            "pagamento": "PENDENTE",
+            "id_pix": None
+        }), 200
+
 
 # Execução principal
 if __name__ == '__main__':

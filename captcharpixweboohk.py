@@ -23,20 +23,24 @@ if __name__ != "__main__":# modulo_nox.py
 
         print("⏳ Aguardando confirmação de pagamento via webhook...")
 
+        id_esperado = Variaveis.id_do_pix  # ID atual da cobrança
+
         while True:
             try:
                 resposta = requests.get(URL_STATUS, timeout=5)
                 if resposta.status_code == 200:
                     dados = resposta.json()
                     status = dados.get("pagamento", "")
-                    if status == "CONFIRMADO":
+                    id_recebido = dados.get("id_pix", "")
+
+                    if status == "CONFIRMADO" and id_recebido == id_esperado:
                         print("✅ Pagamento confirmado com sucesso!")
                         break
                     else:
-                        print("🔄 Pagamento ainda não confirmado...")
+                        print("🔄 Aguardando... Status:", status, "| ID:", id_recebido)
                 else:
                     print(f"⚠️ Erro na requisição: {resposta.status_code}")
             except Exception as erro:
                 print(f"❌ Erro ao consultar status: {erro}")
-            
-            time.sleep(3)  # espera 3 segundos antes de tentar novamente
+
+            time.sleep(3)
