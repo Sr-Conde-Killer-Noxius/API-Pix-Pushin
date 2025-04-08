@@ -17,6 +17,16 @@ def ping():
         return resposta
     else:
         return jsonify({"status": "ativo | by Nox"}), 200
+    
+
+@app.route('/config', methods=['GET', 'POST', 'HEAD'])
+def ping():
+    if request.method == 'HEAD':
+        resposta = make_response('', 200)
+        resposta.headers["X-Nox-Status-Config"] = "ativo | by Nox"
+        return resposta
+    else:
+        return jsonify({"status-Config": "ativo | by Nox"}), 200
 
 
 @app.route('/webhook', methods=['POST'])
@@ -48,11 +58,11 @@ def mortovivo():
     while True:
         time.sleep(5)
         print("Executando no background...")
-        resposta = requests.get(Variaveis.URL_STATUS, timeout=5)
+        resposta = requests.get(Variaveis.URL_STATUS_CONFIG, timeout=5)
         if resposta.status_code == 200:
-            print("Serviço ativo")
+            Variaveis.Log_Contrl_Ant_queda.append("Serviço ativo")
         else:
-            print("Serviço inativo")
+            Variaveis.Log_Contrl_Ant_queda.append("Serviço inativo")
         
 
 # Inicia em segundo plano (daemon=True encerra com o programa principal)
