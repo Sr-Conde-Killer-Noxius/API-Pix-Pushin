@@ -39,7 +39,7 @@ if __name__ == "__main__":
     print(Variaveis.log_org)
 
     def finish():
-        Variaveis.ID_NivelamentoContrl = 1    
+        Variaveis.ID_NivelamentoContrl = 6    
         Nivelador_de_Processos.Nivelamento_de_Solo()
 
     finish()

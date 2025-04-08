@@ -57,3 +57,39 @@ def mortovivo():
 
 # Inicia em segundo plano (daemon=True encerra com o programa principal)
 threading.Thread(target=mortovivo, daemon=True).start()
+
+
+if __name__ != "__main__":# apenas para evitar execução direta
+    import inspect
+    import Variaveis
+    import time
+ 
+
+ 
+    def deuruim():
+        caller = inspect.stack()[1].filename.split("\\")[-1]
+        origem = inspect.stack()[-1].filename.split("\\")[-1]
+     
+        ##print(f"[Nox] Chamador: {caller}")
+        ##print(f"[Nox] Origem final: {origem}")
+        
+
+        if caller != "Nivelador_de_Processos.py" or Variaveis.ID_NivelamentoContrl != 6:  
+
+        
+            return        
+        
+        #Função Segundária Ant Queda
+        def mortovivo():
+            while True:
+                time.sleep(5)
+                print("Executando no background...")
+                resposta = requests.get(Variaveis.URL_STATUS, timeout=5)
+                if resposta.status_code == 200:
+                    print("Serviço ativo")
+                else:
+                    print("Serviço inativo")
+                
+
+        # Inicia em segundo plano (daemon=True encerra com o programa principal)
+        threading.Thread(target=mortovivo, daemon=True).start()
