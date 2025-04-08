@@ -7,6 +7,8 @@ if __name__ != "__main__":# apenas para evitar execução direta
     import Variaveis
     import pushyb
     import json
+    import uuid
+
 
     def tratar_valor_fina_input(valor):
         caller = inspect.stack()[1].filename.split("\\")[-1]
@@ -54,8 +56,15 @@ if __name__ != "__main__":# apenas para evitar execução direta
         
         Variaveis.log.append("Executando Verificações de Inicialização")
         Variaveis.log.append("Nivelador de Processos Iniciado com Sucesso Pomba Correios")
+        Variaveis.id_do_pix = str(uuid.uuid4())
+        print(f"Id do pix: {Variaveis.id_do_pix}")
+        pushyb.dados["id_pix"] = Variaveis.id_do_pix
         pushyb.dados["value"] = Variaveis.Valor_Final_pix
         Variaveis.log.append("Enviando dados para cobrança PIX...")
+        # Registrar o ID no servidor
+        pushyb.requests.post("https://seu-servidor.onrender.com/registrar-id", json={
+            "id": Variaveis.id_do_pix
+        })
 
         try:
             resposta = pushyb.requests.post(pushyb.URL_COBRANCA, json=pushyb.dados, headers=pushyb.headers)
