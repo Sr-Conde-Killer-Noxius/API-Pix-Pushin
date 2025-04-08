@@ -1,6 +1,8 @@
 # Variaveis Gerais 
 Valor_Final_pix = 1100  # Valor em centavos (ex: R$10.00 -> 1000)
 
+URL_STATUS = "https://api-pix-pushin.onrender.com/Status"  # URL para verificar o status do serviço
+
 Status_QRCode = "Sem Dados a Mostrar"
 
 #Variaveis de Inicialização Screen 
