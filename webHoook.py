@@ -5,12 +5,19 @@ import Variaveis
 
 
 from flask import Flask, request, jsonify
+from flask import make_response
 
 app = Flask(__name__)
 
 @app.route('/ping', methods=['GET', 'POST', 'HEAD'])
 def ping():
-    return jsonify({"status": "ativo | by Nox"}), 200
+    if request.method == 'HEAD':
+        resposta = make_response('', 200)
+        resposta.headers["X-Nox-Status"] = "ativo | by Nox"
+        return resposta
+    else:
+        return jsonify({"status": "ativo | by Nox"}), 200
+
 
 @app.route('/webhook', methods=['POST'])
 def receber_webhook():
