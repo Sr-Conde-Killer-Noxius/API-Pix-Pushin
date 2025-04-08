@@ -9,7 +9,7 @@ Status_QRCode = "Sem Dados a Mostrar"
 inciando_list = [
     "Iniciando",
     "Preparando ambiente",
-    "configurando ambiente",
+    "Configurando ambiente",
     "Níveis Adicionados",
 ]
 

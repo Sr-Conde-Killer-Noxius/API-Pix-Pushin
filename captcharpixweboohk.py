@@ -4,10 +4,6 @@ if __name__ != "__main__":# modulo_nox.py
     import Variaveis
 
 
-    # Adiciona log de execução
-    Variaveis.log.append("Executando Verificações de Inicialização")
-
-
     def capthcar_pix_webhook():
         caller = inspect.stack()[1].filename.split("\\")[-1]
         origem = inspect.stack()[-1].filename.split("\\")[-1]
