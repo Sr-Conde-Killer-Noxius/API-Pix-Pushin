@@ -21,16 +21,15 @@ if __name__ != "__main__":# modulo_nox.py
         import time
         
 
-        URL_STATUS = "https://api-pix-pushin.onrender.com/status"  # endpoint exposto pelo Render
-
-        print("⏳ Aguardando confirmação de pagamento via webhook...")
+        URL_STATUS = "https://api-pix-pushin.onrender.com/status"  # endpoint
 
         id_esperado = Variaveis.id_do_pix  # ID da cobrança esperada
+        params = {"id_pix": id_esperado}
         tentativa = 0
 
         while True:
             try:
-                resposta = requests.get(URL_STATUS, timeout=5)
+                resposta = requests.get(URL_STATUS, params=params, timeout=5)
                 if resposta.status_code == 200:
                     dados = resposta.json()
                     status = dados.get("pagamento", "")
@@ -41,6 +40,8 @@ if __name__ != "__main__":# modulo_nox.py
                         break
 
                 tentativa += 1
+                print(f"⏳ Aguardando confirmação de pagamento via webhook... ({tentativa})", end='\r')
+
                 if tentativa >= 60:
                     print("❌ Tempo limite excedido. Pagamento não confirmado.")
                     break

@@ -1,16 +1,14 @@
 import threading
 import requests
 import time
-import os
-import json
 from flask import Flask, request, jsonify, make_response
 
 app = Flask(__name__)
 
 # Lista dinâmica de IDs válidos (em memória)
 ids_validos = set()
-# Substituindo o set simples por um dicionário
 
+# Substituindo o set simples por um dicionário
 pagamentos = {}  # Ex: {"id_pix": "CONFIRMADO"}
 
 
@@ -51,11 +49,15 @@ def webhook():
     dados = request.get_json()
     id_pix = dados.get("id_pix")
 
-    if id_pix:
+    if not id_pix:
+        return jsonify({"erro": "id_pix ausente"}), 400
+
+    if id_pix in pagamentos:
         pagamentos[id_pix] = "CONFIRMADO"
         return jsonify({"status": "recebido"}), 200
     else:
-        return jsonify({"erro": "id_pix ausente"}), 400
+        return jsonify({"erro": "id_pix não registrado"}), 404
+
 
 
 @app.route('/status', methods=['GET'])

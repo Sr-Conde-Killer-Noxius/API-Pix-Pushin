@@ -49,13 +49,9 @@ if __name__ == "__main__":
     finish()
     print("Finalizando...")
     Variaveis.ID_NivelamentoContrl = 545
-    
+
     Nivelador_de_Processos.Nivelamento_de_Solo()
  
-
-
-
-
 
 
 
