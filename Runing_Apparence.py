@@ -8,8 +8,14 @@ import time
 
 Captar_Valor_Final = Variaveis.Valor_Final_pix
 
+
 if __name__ == "__main__":
     import Nivelador_de_Processos
+
+
+    #Inicializando Ant Queda
+    Variaveis.ID_NivelamentoContrl = 6
+    Nivelador_de_Processos.Nivelamento_de_Solo()
 
     #Executando Módulo de Inicialização
     for ignicao in Variaveis.inciando_list:
@@ -39,20 +45,13 @@ if __name__ == "__main__":
     print(Variaveis.log_org)
 
     def finish():
-        Variaveis.ID_NivelamentoContrl = 6    
+        Variaveis.ID_NivelamentoContrl = 1    
         Nivelador_de_Processos.Nivelamento_de_Solo()
 
     finish()
     print("Finalizando...")
     Variaveis.ID_NivelamentoContrl = 5
-
     Nivelador_de_Processos.Nivelamento_de_Solo()
- 
-
-
-
-
-
 
 
 #Atualizando Valor Final

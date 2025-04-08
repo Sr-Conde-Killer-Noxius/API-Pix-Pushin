@@ -20,7 +20,7 @@ def ping():
     
 
 @app.route('/config', methods=['GET', 'POST', 'HEAD'])
-def ping():
+def config():
     if request.method == 'HEAD':
         resposta = make_response('', 200)
         resposta.headers["X-Nox-Status-Config"] = "ativo | by Nox"
@@ -73,6 +73,7 @@ if __name__ != "__main__":# apenas para evitar execução direta
     import inspect
     import Variaveis
     import time
+    import random 
  
 
  
@@ -92,13 +93,13 @@ if __name__ != "__main__":# apenas para evitar execução direta
         #Função Segundária Ant Queda
         def mortovivo():
             while True:
-                time.sleep(5)
-                print("Executando no background...")
-                resposta = requests.get(Variaveis.URL_STATUS, timeout=5)
+                time.sleep(random.randint(540, 840))
+                Variaveis.Log_Contrl_Ant_queda.append("Executando no background...")
+                resposta = requests.get(Variaveis.URL_STATUS, timeout=random.randint(5, 10))
                 if resposta.status_code == 200:
-                    print("Serviço ativo")
+                    Variaveis.Log_Contrl_Ant_queda.append("Serviço ativo")
                 else:
-                    print("Serviço inativo")
+                    Variaveis.Log_Contrl_Ant_queda.append("Serviço inativo")
                 
 
         # Inicia em segundo plano (daemon=True encerra com o programa principal)
