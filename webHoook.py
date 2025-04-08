@@ -69,7 +69,7 @@ def status():
 
     status_pagamento = pagamentos.get(id_pix, "PENDENTE")
     return jsonify({
-        "id_pix": id_pix,
+        "id": id_pix,
         "pagamento": status_pagamento
     }), 200
 

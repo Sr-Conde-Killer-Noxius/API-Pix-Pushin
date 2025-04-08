@@ -19,12 +19,17 @@ if __name__ != "__main__":# modulo_nox.py
         
         import requests
         import time
+        import json 
         
 
         URL_STATUS = "https://api-pix-pushin.onrender.com/status"  # endpoint
 
+        with open("log_pix.json", "r", encoding="utf-8") as file:
+            dados = json.load(file)
+            Variaveis.id_do_pix = dados.get("id", "")
+
         id_esperado = Variaveis.id_do_pix  # ID da cobrança esperada
-        params = {"id_pix": id_esperado}
+        params = {"id": id_esperado}
         tentativa = 0
 
         while True:
@@ -33,7 +38,7 @@ if __name__ != "__main__":# modulo_nox.py
                 if resposta.status_code == 200:
                     dados = resposta.json()
                     status = dados.get("pagamento", "")
-                    id_recebido = dados.get("id_pix", "")
+                    id_recebido = dados.get("id", "")
 
                     if id_recebido == id_esperado and status.lower() == "confirmado":
                         print("✅ Pagamento confirmado!")

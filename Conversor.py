@@ -8,6 +8,7 @@ if __name__ != "__main__":# apenas para evitar execução direta
     import pushyb
     import json
     import uuid
+    import json
 
 
     def tratar_valor_fina_input(valor):
@@ -61,10 +62,7 @@ if __name__ != "__main__":# apenas para evitar execução direta
         pushyb.dados["id_pix"] = Variaveis.id_do_pix
         pushyb.dados["value"] = Variaveis.Valor_Final_pix
         Variaveis.log.append("Enviando dados para cobrança PIX...")
-        # Registrar o ID no servidor
-        pushyb.requests.post("https://api-pix-pushin.onrender.com/registrar-id", json={
-        "id":Variaveis.id_do_pix
-        })
+       
 
         try:
             resposta = pushyb.requests.post(pushyb.URL_COBRANCA, json=pushyb.dados, headers=pushyb.headers)
@@ -73,6 +71,14 @@ if __name__ != "__main__":# apenas para evitar execução direta
             # Gravando a resposta no log antes de qualquer validação
             with open("log_pix.json", "w", encoding="utf-8") as log_file:
                 json.dump(dados_resposta, log_file, indent=4, ensure_ascii=False)
+
+             # Registrar o ID no servidor
+            with open("log_pix.json", "r", encoding="utf-8") as file:
+                dados = json.load(file)
+                Variaveis.id_do_pix = dados.get("id", "")
+            pushyb.requests.post("https://api-pix-pushin.onrender.com/registrar-id", json={
+            "id":Variaveis.id_do_pix
+            })
 
             if "qr_code" in dados_resposta:
                 Variaveis.Status_QRCode = dados_resposta["qr_code"]
