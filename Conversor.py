@@ -70,17 +70,18 @@ if __name__ != "__main__":# apenas para evitar execução direta
             resposta = pushyb.requests.post(pushyb.URL_COBRANCA, json=pushyb.dados, headers=pushyb.headers)
             dados_resposta = resposta.json()
 
-            if "qr_code" in dados_resposta:
-                Variaveis.Status_QRCode = dados_resposta["qr_code"]
-
-            else:
-                Variaveis.Status_QRCode = "Erro: Código PIX ausente na resposta."
-
+            # Gravando a resposta no log antes de qualquer validação
             with open("log_pix.json", "w", encoding="utf-8") as log_file:
                 json.dump(dados_resposta, log_file, indent=4, ensure_ascii=False)
+
+            if "qr_code" in dados_resposta:
+                Variaveis.Status_QRCode = dados_resposta["qr_code"]
+            else:
+                Variaveis.Status_QRCode = "Erro: Código PIX ausente na resposta."
 
         except Exception as e:
             Variaveis.log.append(f"Erro durante o envio: {e}")
             Variaveis.Status_QRCode = "Erro de comunicação."
+
         else:
             Variaveis.log_Erros.append("[Nox] Acesso indevido à função pomba_correios - Nível -1.")

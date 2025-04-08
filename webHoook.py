@@ -47,22 +47,22 @@ def verificar_id():
 @app.route('/webhook', methods=['POST'])
 def webhook():
     dados = request.get_json()
-    id_pix = dados.get("id_pix")
+    id_pix = dados.get("id")
 
     if not id_pix:
         return jsonify({"erro": "id_pix ausente"}), 400
 
-    if id_pix in pagamentos:
-        pagamentos[id_pix] = "CONFIRMADO"
-        return jsonify({"status": "recebido"}), 200
-    else:
-        return jsonify({"erro": "id_pix não registrado"}), 404
+    if id_pix not in pagamentos:
+        return jsonify({"erro": "id_pix inválido ou não registrado"}), 400
+
+    pagamentos[id_pix] = "CONFIRMADO"
+    return jsonify({"status": "recebido"}), 200
 
 
 
 @app.route('/status', methods=['GET'])
 def status():
-    id_pix = request.args.get("id_pix")
+    id_pix = request.args.get("id")
 
     if not id_pix:
         return jsonify({"erro": "id_pix não fornecido"}), 400
