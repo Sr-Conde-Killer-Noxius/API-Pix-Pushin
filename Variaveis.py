@@ -1,13 +1,27 @@
-# Variaveis Gerais 
-Valor_Final_pix = 1100  # Valor em centavos (ex: R$10.00 -> 1000)
+# ==========================
+# 📦 IMPORTAÇÃO DE MÓDULOS
+# ==========================
+import User_Confi_varys  # Arquivo com variáveis externas configuráveis
 
-id_do_pix = 1
+# ==========================
+# 💰 VARIÁVEIS FINANCEIRAS
+# ==========================
+Valor_Final_pix = 1100  # Valor do pagamento em centavos (ex: 1100 = R$11,00)
+id_do_pix = 1  # Identificador único do pagamento
 
-URL_STATUS_CONFIG = "https://api-pix-pushin.onrender.com/config"  # URL para verificar o status do serviço
+# ==========================
+# 🌐 URLS EXTERNAS
+# ==========================
+URL_STATUS_CONFIG = User_Confi_varys.USER_URL_CONFIG  # Endpoint de status da API webhook
 
-Status_QRCode = "Sem Dados a Mostrar"
+# ==========================
+# 📡 STATUS / FEEDBACK
+# ==========================
+Status_QRCode = "Sem Dados a Mostrar"  # Status exibido quando não há QR gerado
 
-#Variaveis de Inicialização Screen 
+# ==========================
+# ⚙️ MENSAGENS DE INICIALIZAÇÃO
+# ==========================
 inciando_list = [
     "Iniciando",
     "Preparando ambiente",
@@ -15,27 +29,27 @@ inciando_list = [
     "Níveis Adicionados",
 ]
 
-#Variaveis de Controle
-Sleep_time = 1  # Tempo de espera em segundos
+# ==========================
+# ⏱️ CONTROLE DE EXECUÇÃO
+# ==========================
+Sleep_time = 1  # Delay entre execuções em segundos
 
-#Logs de Execução Screen
-log = [
-    
-]
+# ==========================
+# 🧾 LOGS DE EXECUÇÃO
+# ==========================
+log = []  # Log geral da execução
+log_Erros = []  # Log de erros
+Log_Contrl_Ant_queda = []  # Log do sistema de monitoramento anti-quedas
 
-log_Erros = [
-    
-]
+# ==========================
+# 📂 ORGANIZAÇÃO VISUAL
+# ==========================
+log_org = "\n----------------------------------------\n"  # Separador visual no log
 
-Log_Contrl_Ant_queda = [
-    
-]
-
-#Log Organizacional
-log_org = "\n----------------------------------------\n"
-
-
-RetornoHulk = 0
-
-#ID de Nivelametno de processos.
-ID_NivelamentoContrl = 0
+# ==========================
+# 🛠️ CONTROLE DE EXECUÇÃO
+# ==========================
+RetornoHulk = 0  # Código genérico de retorno
+ID_NivelamentoContrl = 0  # ID de controle para execução condicional
+MAESTRO_DE_CERIMONIAS = "Runing_Apparence"
+CORDENADOR_DE_CERIMONIAS = "Nivelador_de_Processos.py"

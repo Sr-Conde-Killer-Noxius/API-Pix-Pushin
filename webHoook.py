@@ -1,17 +1,25 @@
-import threading
-import requests
-import time
-from flask import Flask, request, jsonify, make_response
+# =========================================
+# 📦 IMPORTAÇÃO DE BIBLIOTECAS EXTERNAS
+# =========================================
+import threading      # Execução em paralelo
+import requests       # Requisições HTTP
+import time           # Controle de tempo
+from flask import Flask, request, jsonify, make_response  # Webserver via Flask
 
+# =========================================
+# 🚀 INICIALIZAÇÃO DO APLICATIVO FLASK
+# =========================================
 app = Flask(__name__)
 
-# Lista dinâmica de IDs válidos (em memória)
-ids_validos = set()
+# =========================================
+# 🧠 ESTRUTURAS DE CONTROLE EM MEMÓRIA
+# =========================================
+ids_validos = set()            # IDs registrados e válidos
+pagamentos = {}               # Status dos pagamentos por ID
 
-# Substituindo o set simples por um dicionário
-pagamentos = {}  # Ex: {"id_pix": "CONFIRMADO"}
-
-
+# =========================================
+# 🔍 ROTAS DE MONITORAMENTO
+# =========================================
 @app.route('/ping', methods=['GET', 'POST', 'HEAD'])
 def ping():
     if request.method == 'HEAD':
@@ -28,6 +36,9 @@ def config():
         return resposta
     return jsonify({"status-Config": "ativo | by Nox"}), 200
 
+# =========================================
+# ✅ REGISTRO E CONSULTA DE IDs
+# =========================================
 @app.route('/registrar-id', methods=['POST'])
 def registrar_id():
     dados = request.json
@@ -35,7 +46,7 @@ def registrar_id():
     if not id_pix:
         return jsonify({"erro": "ID não informado"}), 400
     ids_validos.add(id_pix)
-    pagamentos[id_pix] = "PENDENTE"  # <-- ESSENCIAL
+    pagamentos[id_pix] = "PENDENTE"  # Inicializa como pendente
     return jsonify({"status": "ID registrado com sucesso"}), 200
 
 @app.route('/verificar-id', methods=['GET'])
@@ -45,6 +56,9 @@ def verificar_id():
         return jsonify({"valido": True}), 200
     return jsonify({"valido": False}), 404
 
+# =========================================
+# 📩 RECEBIMENTO DE CONFIRMAÇÕES (WEBHOOK)
+# =========================================
 @app.route('/webhook', methods=['POST'])
 def webhook():
     dados = request.get_json()
@@ -59,8 +73,9 @@ def webhook():
     pagamentos[id_pix] = "CONFIRMADO"
     return jsonify({"status": "recebido"}), 200
 
-
-
+# =========================================
+# 🔎 CONSULTA DO STATUS DE PAGAMENTO
+# =========================================
 @app.route('/status', methods=['GET'])
 def status():
     id_pix = request.args.get("id")
@@ -74,13 +89,15 @@ def status():
         "pagamento": status_pagamento
     }), 200
 
-
-
-# Execução principal
+# =========================================
+# 🖥️ EXECUÇÃO DIRETA DO SERVIDOR
+# =========================================
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)
 
-# Background monitoramento (somente se importado corretamente)
+# =========================================
+# 👻 EXECUÇÃO EM BACKGROUND (SE IMPORTADO)
+# =========================================
 if __name__ != "__main__":
     import inspect
     import Variaveis
@@ -88,7 +105,7 @@ if __name__ != "__main__":
 
     def mortovivo():
         while True:
-            time.sleep(random.randint(540, 840))
+            time.sleep(random.randint(540, 840))  # Intervalo aleatório
             Variaveis.Log_Contrl_Ant_queda.append("Executando no background...")
             resposta = requests.get(Variaveis.URL_STATUS_CONFIG, timeout=random.randint(5, 10))
             if resposta.status_code == 200:

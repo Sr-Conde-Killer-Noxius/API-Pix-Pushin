@@ -15,15 +15,15 @@ if __name__ != "__main__":
     # =========================================
     # 🛠️ FUNÇÃO DE EXIBIÇÃO DE LOGS DE ERRO
     # =========================================
-    def deuruim():
+    def Result_line():
         caller = inspect.stack()[1].filename.split("\\")[-1]
         origem = inspect.stack()[-1].filename.split("\\")[-1]
 
-        # 🛡️ Cadeado de segurança: trava dupla (origem + nivelamento)
-        if caller != "Nivelador_de_Processos.py" or Variaveis.ID_NivelamentoContrl != 3:
+        # 🛡️ Cadeado de segurança: trava tripla (origem + nivelamento + Start)
+        if caller != Variaveis.CORDENADOR_DE_CERIMONIAS or Variaveis.ID_NivelamentoContrl != 76 or origem != Variaveis.MAESTRO_DE_CERIMONIAS:
+            Variaveis.log_Erros.append("[Nox] Acesso indevido!.")
+            Variaveis.log_Erros.append(f"[Nox] Chamador: {caller}")
+            Variaveis.log_Erros.append(f"Nivel: {Variaveis.ID_NivelamentoContrl}")
             return
 
-        print("Iniciando Relatório de Erros:")
-        for Log_Erro_atual in Variaveis.log_Erros:
-            print(Log_Erro_atual)
-            time.sleep(Variaveis.Sleep_time)  # Atraso configurado em Variaveis
+        print("Defina a ação a ser feita após o pagamento confirmado - line integration by Nox")
