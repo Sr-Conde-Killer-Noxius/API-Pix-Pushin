@@ -51,5 +51,6 @@ log_org = "\n----------------------------------------\n"  # Separador visual no 
 # ==========================
 RetornoHulk = 0  # Código genérico de retorno
 ID_NivelamentoContrl = 0  # ID de controle para execução condicional
-MAESTRO_DE_CERIMONIAS = "Runing_Apparence"
+ID_NVLMENT_TWO = 0 # ID de controle para execução condicional
+MAESTRO_DE_CERIMONIAS = "Runing_Apparence.py"
 CORDENADOR_DE_CERIMONIAS = "Nivelador_de_Processos.py"

@@ -19,10 +19,11 @@ if __name__ != "__main__":
         caller = inspect.stack()[1].filename.split("\\")[-1]
         origem = inspect.stack()[-1].filename.split("\\")[-1]
 
-        # 🛡️ Cadeado de segurança: trava tripla (origem + nivelamento + Start)
-        if caller != Variaveis.CORDENADOR_DE_CERIMONIAS or Variaveis.ID_NivelamentoContrl != 76 or origem != Variaveis.MAESTRO_DE_CERIMONIAS:
+        # 🛡️ Cadeado de segurança: trava quadupla (origem + nivelamento + Start + NVL2)
+        if caller != Variaveis.CORDENADOR_DE_CERIMONIAS or Variaveis.ID_NivelamentoContrl != 98 or origem != Variaveis.MAESTRO_DE_CERIMONIAS or Variaveis.ID_NVLMENT_TWO !=1:
             Variaveis.log_Erros.append("[Nox] Acesso indevido!.")
             Variaveis.log_Erros.append(f"[Nox] Chamador: {caller}")
+            Variaveis.log_Erros.append(f"[Nox] Chamador: {origem}")
             Variaveis.log_Erros.append(f"Nivel: {Variaveis.ID_NivelamentoContrl}")
             return
 

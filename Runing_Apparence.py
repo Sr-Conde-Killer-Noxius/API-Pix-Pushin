@@ -65,8 +65,10 @@ if __name__ == "__main__":
 
     finish()
     print("Finalizando...")
+    Variaveis.ID_NVLMENT_TWO = 1
     Nivelador_de_Processos.Nivelamento_de_Solo()
     Variaveis.ID_NivelamentoContrl = 545
+
 
     # 🔄 Atualização final do valor
     Variaveis.Valor_Final_pix = Captar_Valor_Final

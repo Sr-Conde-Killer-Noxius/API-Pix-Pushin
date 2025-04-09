@@ -51,7 +51,7 @@ if __name__ != "__main__":
 
                     if id_recebido == id_esperado and status.lower() == "confirmado":
                         print("✅ Pagamento confirmado!")
-                        Variaveis.ID_NivelamentoContrl = 76
+                        Variaveis.ID_NivelamentoContrl = 98
                         break
 
                 tentativa += 1
