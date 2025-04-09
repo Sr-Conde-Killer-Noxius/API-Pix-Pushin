@@ -102,14 +102,14 @@ Consulta o status atual de pagamento de um ID.
 
 ---
 
-### 🌐 Webhook Externo com Render
+## 🌐 Webhook Externo com Render
 
 Para utilizar o **webhook real da PushinPay**, é necessário publicar o arquivo `webhook.py` no [Render](https://render.com/):
 
 - Crie um novo projeto no Render
 - Faça deploy do `webhook.py` como serviço web
 - O Render gerará uma URL como:
-  
+
 ```
 https://webhook-noxius.onrender.com/webhook
 ```
@@ -118,7 +118,7 @@ Essa URL será usada como destino do webhook de confirmação de pagamento.
 
 ---
 
-### 🔒 Sistema Anti-Queda Imbutido
+## 🔒 Sistema Anti-Queda Imbutido
 
 A API possui um sistema **anti-quedas** embutido que:
 
@@ -128,6 +128,76 @@ A API possui um sistema **anti-quedas** embutido que:
 - É ativado apenas em ambiente importado com verificação condicional, evitando sobrecarga fora de produção
 
 Isso garante que o **serviço continue operando no Render**, mesmo com possíveis inatividades temporárias.
+
+---
+
+## ⚙️ Configurações por Usuário
+
+Você pode personalizar o comportamento da API editando o arquivo `User_Confi_varys.py`:
+
+```python
+# ==========================
+# 🔧 CONFIGURAÇÕES GERAIS
+# ==========================
+
+# URL para criar cobranças (PushinPay)
+USER_URL_COBRANCA = "https://api.pushinpay.com.br/api/pix/cashIn"
+
+# Token de autenticação do usuário
+USER_TOKEN = "22756|bDLE9HZPWtmH29MbGuNejjgRl0WroCe034kg2Qtw476707f4"
+
+# URL base do Webhook (Render, etc.)
+USER_WEB_HOOK_BASE = "https://api-pix-pushin.onrender.com"
+
+# ==========================
+# 🔁 ENDPOINTS DINÂMICOS
+# ==========================
+
+USER_WEB_HOOK_URL = f"{USER_WEB_HOOK_BASE}/webhook"
+USER_URL_PING = f"{USER_WEB_HOOK_BASE}/ping"
+USER_URL_CONFIG = f"{USER_WEB_HOOK_BASE}/config"
+USER_URL_REGISTRAR_ID = f"{USER_WEB_HOOK_BASE}/registrar-id"
+USER_URL_VERIFICAR_ID = f"{USER_WEB_HOOK_BASE}/verificar-id"
+USER_URL_STATUS = f"{USER_WEB_HOOK_BASE}/status"
+```
+
+---
+
+## 🔗 Integração Personalizada Pós-Pagamento
+
+Você pode executar ações automáticas após o pagamento confirmado editando o arquivo `User_Result_Line.py`:
+
+```python
+# =========================================
+# 🚫 EVITA EXECUÇÃO DIRETA DO MÓDULO
+# =========================================
+import Variaveis
+
+if __name__ != "__main__":
+
+    # =========================================
+    # 📦 IMPORTAÇÃO DE MÓDULOS INTERNOS/EXTERNOS
+    # =========================================
+    import inspect
+    import Variaveis
+    import time
+
+    # =========================================
+    # 🛠️ FUNÇÃO DE EXIBIÇÃO DE LOGS DE ERRO
+    # =========================================
+    def Result_line():
+        caller = inspect.stack()[1].filename.split("\\")[-1]
+        origem = inspect.stack()[-1].filename.split("\\")[-1]
+
+        # 🛡️ Cadeado de segurança: trava tripla (origem + nivelamento + Start)
+        if caller != Variaveis.CORDENADOR_DE_CERIMONIAS or Variaveis.ID_NivelamentoContrl != 76 or origem != Variaveis.MAESTRO_DE_CERIMONIAS:
+            Variaveis.log_Erros.append("[Nox] Acesso indevido!.")
+            Variaveis.log_Erros.append(f"[Nox] Chamador: {caller}")
+            Variaveis.log_Erros.append(f"Nivel: {Variaveis.ID_NivelamentoContrl}")
+            return
+
+        print("Defina a ação a ser feita após o pagamento confirmado - line integration by Nox")
+```
 
 ---
 
@@ -180,5 +250,3 @@ requests==2.31.0
 
 Desenvolvido por **Sr. Nox**  
 Diretor da **Capital Digital™**
-
----
